@@ -1,186 +1,378 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Mark Long</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mark Long - Software Engineer</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rampart+One&family=Cherry+Bomb+One&display=swap"
+    rel="stylesheet"
+  />
+  <link href="https://fonts.googleapis.com/css2?family=DynaPuff&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = { darkMode: 'class' };
+  </script>
+
+  <style>
+    /* Progress bar */
+    #progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      width: 0%;
+      background: var(--accent);
+      z-index: 1000;
+      transition: width 0.1s ease;
+    }
+
+    /* Hide default scrollbar */
+    body {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Theming variables */
+    :root {
+      --bg-gradient: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+      --nav-bg: rgba(255, 255, 255, 0.3);
+      --nav-text: #000;
+      --accent: #b39ddb; /* lilac */
+      --section-bg: rgba(255, 255, 255, 0.2);
+      --text-color: #000;
+    }
+    .dark {
+      --bg-gradient: linear-gradient(135deg, #0d1b2a, #415a77);
+      --nav-bg: rgba(20, 20, 30, 0.4);
+      --nav-text: #fff;
+      --accent: #9575cd; /* deeper lilac for dark mode */
+      --section-bg: rgba(20, 20, 30, 0.2);
+      --text-color: #fff;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg-gradient) fixed;
+      color: var(--text-color);
+      transition: background 0.5s, color 0.5s;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 25%;
+      height: 100vh;
+      background: var(--nav-bg);
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 0;
+      transition: background 0.5s;
+    }
+
+    main {
+      margin-left: 25%;
+      width: 75%;
+      min-height: 100vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    section {
+      position: relative;
+      margin: 2rem;
+      padding: 2rem 2rem 2rem 2rem;
+      background: var(--section-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+      transition: background 0.5s;
+    }
+
+    /* Section divider wave */
+    .divider svg {
+      display: block;
+      width: 100%;
+      height: 40px;
+      margin-top: -1px;
+    }
+
+    h2 {
+      color: var(--accent);
+      font-family: 'Rampart One', cursive;
+      transition: transform 0.3s;
+      text-align: center;
+      font-size: 4vw !important; /* responsive large size */
+    }
+    h2:hover {
+      transform: scale(1.05);
+    }
+
+    h3 {
+      font-family: 'Cherry Bomb One', cursive;
+    }
+
+    p {
+      font-family: 'DynaPuff';
+    }
+
+    .nav-link {
+      width: 100%;
+      text-align: center;
+      font-family: 'Rampart One', cursive;
+      font-size: 1rem;
+      color: var(--nav-text);
+      margin: 0.75rem 0;
+      text-decoration: none;
+    }
+    .nav-link:hover {
+      border-bottom: 2px solid var(--accent);
+    }
+    .nav-link.active {
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    /* Toggle slider */
+    .switch {
+      position: relative;
+      width: 40px;
+      height: 20px;
+      margin: 1rem 0;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute; inset: 0;
+      background: var(--section-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 34px;
+      transition: all 0.4s;
+      cursor: pointer;
+    }
+    .slider:before {
+      content: '\2600'; /* minimalist sun */
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      left: 2px;
+      bottom: 2px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s;
+    }
+    .switch input:checked + .slider:before {
+      transform: translateX(20px) scale(1.1);
+      content: '\263D'; /* minimalist moon */
+    }
+
+    /* Card style in Projects */
+    .project-card {
+      background: var(--section-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+      padding: 2rem;
+      margin-top: 2rem;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+    .card-link {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      text-decoration: none;
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(255,255,255,0.7);
+      padding: 0.15rem 0.5rem;
+      border-radius: 0.35rem;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+    .card-link:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 0.75rem;
+    }
+    .social-icons a {
+      padding: 0.5rem;
+      background: var(--section-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 9999px;
+      transition: transform 0.3s;
+    }
+    .social-icons img {
+      width: 1rem; height: 1rem;
+      filter: none; transition: filter 0.3s;
+    }
+    .dark .social-icons img {
+      filter: brightness(0) invert(1);
+    }
+
+    #contact-form, #contact-form * {
+      font-family: 'Indie Flower', cursive !important;
+    }
+  </style>
 </head>
 <body>
-    <header class="container">
-        <div class="logo">Jane<span>Dev</span></div>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+  <div id="progress-bar"></div>
+  <nav>
+    <div class="flex flex-col items-center">
+      <div class="text-3xl font-semibold mb-2" style="color:var(--nav-text);font-family:'Rampart One',cursive;">Mark Long</div>
+      <div class="text-sm mb-2" style="color:var(--nav-text);font-family:'Cherry Bomb One',cursive;">Software Engineer</div>
+    </div>
+    <div id="nav-links" class="flex flex-col items-center">
+      <a href="#intro" class="nav-link" data-target="intro">About</a>
+      <a href="#projects" class="nav-link" data-target="projects">Projects</a>
+      <a href="#writing" class="nav-link" data-target="writing">Writing</a>
+      <a href="#hobbies" class="nav-link" data-target="hobbies">Hobbies</a>
+      <a href="#hobbies" class="nav-link" data-target="contact">Contact</a>
+    </div>
+    <div class="flex flex-col items-center">
+      <label class="switch mb-6">
+        <input type="checkbox" id="theme-switch" />
+        <span class="slider"></span>
+      </label>
+      <div class="social-icons">
+        <a href="https://github.com/MarkL78" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/github.svg" alt="GitHub" /></a>
+        <a href="https://www.linkedin.com/in/mark-long-29965b1a0/" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/linkedin.svg" alt="LinkedIn" /></a>
+        <a href="mailto:mark.long579@gmail.com"><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/maildotru.svg" alt="Email" /></a>
+      </div>
+    </div>
+  </nav>
+  <main id="content">
+    <section id="intro">
+      <h2>Intro</h2>
+    </section>
+    <div class="divider"><svg viewBox="0 0 1440 40"><path d="M0,40 C360,0 720,80 1440,40 L1440,0 L0,0 Z" fill="#d6c7f7"/></svg></div>
     
-    <section id="home" class="hero container">
-        <div class="hero-text">
-            <h1>Hi, I'm <span>Jane Developer</span></h1>
-            <p>I'm a frontend developer with a passion for creating beautiful, accessible, and user-friendly web applications. I specialize in modern JavaScript frameworks and responsive design.</p>
-            <a href="#contact" class="btn">Let's work together</a>
-        </div>
-        <div class="hero-image">
-            <img src="/api/placeholder/600/400" alt="Jane Developer">
-        </div>
+    <section id="projects">
+      <!-- Project Section -->
+      
+      <h2>sometimes I make things...</h2>
+      <!-- First Project Card -->
+      <div class="project-card">
+        <h3 class="text-2xl font-semibold mb-2">Robotic Nurse for the Chronically Ill (Symposium Winner)</h3>
+        <p>This was a research capstone project sponsored by Novo Nordisk! 
+          Our team created a robotic assistant that utilized various ML technologies to interact
+          with the user and the environment.</p>
+        <a href="https://www.ece.uw.edu/wp-content/uploads/2023/06/2023_ENGINE_Team38_Poster.pdf" class="card-link" target="_blank">Poster Here!</a>
+      </div>
+
+      <!-- Second Project Card -->
+      <div class="project-card">
+        <h3 class="text-2xl font-semibold mb-2">Project Title</h3>
+        <p>Brief description of the project goes here.</p>
+        <a href="#" class="card-link" target="_blank">View Project</a>
+      </div>
+
+      <!-- Third Project Card -->
+      <div class="project-card">
+        <h3 class="text-2xl font-semibold mb-2">Project Title</h3>
+        <p>Brief description of the project goes here.</p>
+        <a href="#" class="card-link" target="_blank">View Project</a>
+      </div>
+      
+    </section>
+    <div class="divider"><svg viewBox="0 0 1440 40"><path d="M0,0 C360,40 720,-40 1440,0 L1440,40 L0,40 Z" fill="#d6c7f7"/></svg></div>
+    
+    <section id="writing"><h2>...or write things!</h2>
+        <!-- First Writing Card -->
+      <div class="project-card">
+        <h3 class="text-2xl font-semibold mb-2">SongV is the best ship</h3>
+        <p>No one can make me change my mind</p>
+        <a href="https://medium.com/" class="card-link" target="_blank">View Project</a>
+      </div>
+
+      <!-- Second Writing Card -->
+      <div class="project-card">
+        <h3 class="text-2xl font-semibold mb-2">Filler Title or is it??</h3>
+        <p>It is a filler title...sorry</p>
+        <a href="https://medium.com/" class="card-link" target="_blank">View Project</a>
+      </div>
+
+      <!-- Third Writing Card -->
+      <div class="project-card">
+        <h3 class="text-2xl font-semibold mb-2">The Beep Boop Timeline</h3>
+        <p>Beeeeeep beep boop boop beep boop boop.</p>
+        <a href="https://medium.com/" class="card-link" target="_blank">View Project</a>
+      </div>
     </section>
     
-    <section id="skills" class="skills container">
-        <h2 class="section-title">My Skills</h2>
-        <div class="skills-container">
-            <div class="skill-card">
-                <div class="skill-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm7.031 9.75l-.232-2.718 10.059.003.23-2.622L5.412 4.41l.698 8.01h9.126l-.326 3.426-2.91.804-2.955-.81-.188-2.11H6.248l.33 4.171L12 19.351l5.379-1.443.744-8.157H8.531z"/></svg>
-                </div>
-                <h3>HTML5</h3>
-            </div>
-            <div class="skill-card">
-                <div class="skill-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.565-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.288l5.373-1.53L18.59 4.414v-.001z"/></svg>
-                </div>
-                <h3>CSS3</h3>
-            </div>
-            <div class="skill-card">
-                <div class="skill-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.404-.601-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65l.046.067zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179l.004-.056z"/></svg>
-                </div>
-                <h3>JavaScript</h3>
-            </div>
-            <div class="skill-card">
-                <div class="skill-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.41 0-.783.093-1.106.278-1.375.793-1.683 3.264-.973 6.365C1.98 8.917 0 10.42 0 12.004c0 1.59 1.99 3.097 5.043 4.03-.704 3.113-.39 5.588.988 6.38.32.187.69.275 1.102.275 1.345 0 3.107-.96 4.888-2.624 1.78 1.654 3.542 2.603 4.887 2.603.41 0 .783-.09 1.106-.275 1.374-.792 1.683-3.263.973-6.365C22.02 15.096 24 13.59 24 12.004c0-1.59-1.99-3.097-5.043-4.032.704-3.11.39-5.587-.988-6.38-.318-.184-.688-.277-1.092-.278zm-.005 1.09v.006c.225 0 .406.044.558.127.666.382.955 1.835.73 3.704-.054.46-.142.945-.25 1.44-.96-.236-2.006-.417-3.107-.534-.66-.905-1.345-1.727-2.035-2.447 1.592-1.48 3.087-2.292 4.105-2.295zm-9.77.02c1.012 0 2.514.808 4.11 2.28-.686.72-1.37 1.537-2.02 2.442-1.107.117-2.154.298-3.113.538-.112-.49-.195-.964-.254-1.42-.23-1.868.054-3.32.714-3.707.19-.09.4-.127.563-.132zm4.882 3.05c.455.468.91.992 1.36 1.564-.44-.02-.89-.034-1.345-.034-.46 0-.915.01-1.36.034.44-.572.895-1.096 1.345-1.565zM12 8.1c.74 0 1.477.034 2.202.093.406.582.802 1.203 1.183 1.86.372.64.71 1.29 1.018 1.946-.308.655-.646 1.31-1.013 1.95-.38.66-.773 1.288-1.18 1.87-.728.063-1.466.098-2.21.098-.74 0-1.477-.035-2.202-.093-.406-.582-.802-1.204-1.183-1.86-.372-.64-.71-1.29-1.018-1.946.303-.657.646-1.313 1.013-1.954.38-.66.773-1.286 1.18-1.868.728-.064 1.466-.098 2.21-.098zm-3.635.254c-.24.377-.48.763-.704 1.16-.225.39-.435.782-.635 1.174-.265-.656-.49-1.31-.676-1.947.64-.15 1.315-.283 2.015-.386zm7.26 0c.695.103 1.365.23 2.006.387-.18.632-.405 1.282-.66 1.933-.2-.39-.41-.783-.64-1.174-.225-.392-.465-.774-.705-1.146zm3.063.675c.484.15.944.317 1.375.498 1.732.74 2.852 1.708 2.852 2.476-.005.768-1.125 1.74-2.857 2.475-.42.18-.88.342-1.355.493-.28-.958-.646-1.956-1.1-2.98.45-1.017.81-2.01 1.085-2.964zm-13.395.004c.278.96.645 1.957 1.1 2.98-.45 1.017-.812 2.01-1.086 2.964-.484-.15-.944-.318-1.37-.5-1.732-.737-2.852-1.706-2.852-2.474 0-.768 1.12-1.742 2.852-2.476.42-.18.88-.342 1.356-.494zm11.678 4.28c.265.657.49 1.312.676 1.948-.64.157-1.316.29-2.016.39.24-.375.48-.762.705-1.158.225-.39.435-.788.636-1.18zm-9.945.02c.2.392.41.783.64 1.175.23.39.465.772.705 1.143-.695-.102-1.365-.23-2.006-.386.18-.63.406-1.282.66-1.933zM17.92 16.32c.112.493.2.968.254 1.423.23 1.868-.054 3.32-.714 3.708-.147.09-.338.128-.563.128-1.012 0-2.514-.807-4.11-2.28.686-.72 1.37-1.536 2.02-2.44 1.107-.118 2.154-.3 3.113-.54zm-11.83.01c.96.234 2.006.415 3.107.532.66.905 1.345 1.727 2.035 2.446-1.595 1.483-3.092 2.295-4.11 2.295-.22-.005-.406-.05-.553-.132-.666-.38-.955-1.834-.73-3.703.054-.46.142-.944.25-1.438zm4.56.64c.44.02.89.034 1.345.034.46 0 .915-.01 1.36-.034-.44.572-.895 1.095-1.345 1.565-.455-.47-.91-.993-1.36-1.565z"/></svg>
-                </div>
-                <h3>React</h3>
-            </div>
-            <div class="skill-card">
-                <div class="skill-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z"/></svg>
-                </div>
-                <h3>Tailwind</h3>
-            </div>
-            <div class="skill-card">
-                <div class="skill-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.006 2c-5.52 0-9.998 4.475-9.998 9.996 0 4.419 2.865 8.176 6.839 9.498.5.09.68-.216.68-.48 0-.236-.008-.865-.013-1.696-2.782.603-3.369-1.34-3.369-1.34-.454-1.157-1.11-1.465-1.11-1.465-.908-.62.069-.608.069-.608 1.003.07 1.532 1.03 1.532 1.03.892 1.529 2.341 1.087 2.91.832.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.268 2.75 1.026A9.616 9.616 0 0 1 12 6.82c.85.004 1.705.114 2.504.337 1.909-1.294 2.747-1.026 2.747-1.026.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.92.678 1.855 0 1.337-.012 2.415-.012 2.745 0 .267.18.578.688.48A10 10 0 0 0 22 11.996C22 6.474 17.523 2 12.006 2z"/></svg>
-                </div>
-                <h3>Git</h3>
-            </div>
-        </div>
+    <div class="divider"><svg viewBox="0 0 1440 40"><path d="M0,40 C360,0 720,80 1440,40 L1440,0 L0,0 Z" fill="#d6c7f7"/></svg></div>
+    <section id="hobbies"><h2>when not coding...</h2>
+      <canvas id="physics-canvas" style="width:100%; height:400px; display:block;"></canvas>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+      <script type="module">
+        import { initPhysicsSimulation } from './script.js';
+        initPhysicsSimulation();
+      </script>
     </section>
-    
-    <section id="projects" class="projects container">
-        <h2 class="section-title">Featured Projects</h2>
-        <div class="project-grid">
-            <div class="project-card">
-                <div class="project-img">
-                    <img src="/api/placeholder/600/400" alt="E-commerce Website">
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">E-commerce Platform</h3>
-                    <p>A fully functional e-commerce site with product listings, shopping cart, and checkout functionality.</p>
-                    <div class="project-tags">
-                        <span class="tag">React</span>
-                        <span class="tag">Redux</span>
-                        <span class="tag">Node.js</span>
-                        <span class="tag">MongoDB</span>
-                    </div>
-                    <a href="#" class="project-link">
-                        View project
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="project-card">
-                <div class="project-img">
-                    <img src="/api/placeholder/600/400" alt="Task Management App">
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">Task Management App</h3>
-                    <p>A Kanban-style task management application with drag-and-drop functionality and team collaboration.</p>
-                    <div class="project-tags">
-                        <span class="tag">Vue.js</span>
-                        <span class="tag">Firebase</span>
-                        <span class="tag">Tailwind CSS</span>
-                    </div>
-                    <a href="#" class="project-link">
-                        View project
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="project-card">
-                <div class="project-img">
-                    <img src="/api/placeholder/600/400" alt="Weather Dashboard">
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">Weather Dashboard</h3>
-                    <p>A weather forecasting application that displays current and future weather conditions with data visualization.</p>
-                    <div class="project-tags">
-                        <span class="tag">JavaScript</span>
-                        <span class="tag">Chart.js</span>
-                        <span class="tag">OpenWeather API</span>
-                    </div>
-                    <a href="#" class="project-link">
-                        View project
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
+
+    <div class="divider"><svg viewBox="0 0 1440 40"><path d="M0,40 C360,0 720,80 1440,40 L1440,0 L0,0 Z" fill="#d6c7f7"/></svg></div>
+    <section id="contact"><h2>Let's connect!</h2>
+      <form id="contact-form" action="https://formspree.io/f/yourFormID" method="POST" style="max-width:1000px;width:98%;margin:2rem auto 0 auto;display:flex;flex-direction:column;gap:1rem;">
+        <div style="background: var(--section-bg); box-shadow: 0 4px 24px rgba(0,0,0,0.08); border-radius: 1rem; padding: 2.5rem 2rem; display: flex; flex-direction: column; gap: 1.25rem;">
+          <input type="text" name="name" placeholder="Whats your name?" required style="padding:0.75rem 1rem;border-radius:0.75rem;border:1.5px solid #d1d5db;font-size:1rem;transition:box-shadow 0.2s,border 0.2s;outline:none;box-shadow:none;">
+          <input type="email" name="email" placeholder="Best way to reach you?" required style="padding:0.75rem 1rem;border-radius:0.75rem;border:1.5px solid #d1d5db;font-size:1rem;transition:box-shadow 0.2s,border 0.2s;outline:none;box-shadow:none;">
+          <textarea name="message" placeholder="Now what's on your mind?" required rows="5" style="padding:0.75rem 1rem;border-radius:0.75rem;border:1.5px solid #d1d5db;font-size:1rem;transition:box-shadow 0.2s,border 0.2s;outline:none;box-shadow:none;resize:vertical;"></textarea>
+          <button type="submit" style="background:var(--accent);color:#fff;padding:0.75rem 0;font-size:1.1rem;border:none;border-radius:0.75rem;font-weight:bold;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.08);transition:background 0.2s,box-shadow 0.2s;">Send</button>
+          <div id="form-status" style="text-align:center;font-size:0.98rem;"></div>
         </div>
+      </form>
+      <style>
+        #contact-form input:focus, #contact-form textarea:focus {
+          border-color: var(--accent);
+          box-shadow: 0 0 0 2px var(--accent);
+        }
+        #contact-form button:hover, #contact-form button:focus {
+          background: #b39ddb;
+          box-shadow: 0 4px 16px rgba(179,157,219,0.15);
+        }
+        @media (max-width: 900px) {
+          #contact-form {
+            max-width: 100%;
+            width: 100%;
+          }
+          #contact-form > div {
+            padding: 1.25rem 0.5rem;
+          }
+        }
+      </style>
     </section>
-    
-    <section id="contact" class="contact container">
-        <h2 class="section-title">Contact Me</h2>
-        <div class="contact-wrapper">
-            <div class="contact-text">
-                <p>I'm always open to new opportunities and collaborations. If you have a project in mind or just want to say hi, feel free to reach out.</p>
-                <p>You can also find me on social media:</p>
-                <div class="social-links">
-                    <a href="#" class="social-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-1.29 16.291c-1.568-1.568-1.568-4.095 0-5.663 1.567-1.567 4.095-1.567 5.662 0l-1.13 1.13c-1.263 1.263-3.293 1.263-4.555 0z"/></svg>
-                    </a>
-                    <a href="#" class="social-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M23.246 7.754a6.002 6.002 0 0 0-5.692-5.693 6.002 6.002 0 0 0-8.305 0 6.002 6.002 0 0 0 0 8.304 6.002 6.002 0 0 0 8.304 0 6.002 6.002 0 0 0 5.693-5.692zm-15.203 6.793a4.003 4.003 0 0 1-3.992-3.993 4.003 4.003 0 0 1 3.992-3.993 4.003 4.003 0 0 1 3.993 3.993 4.003 4.003 0 0 1-3.993 3.993z"/></svg>
-                    </a>
-                    <a href="#" class="social-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm7.753 18.305c-.261-.586-.789-.991-1.871-1.241-2.293-.529-4.148-.975-5.737-1.286-1.958-.367-3.392-1.507-3.392-3.827v-2.167c0-2.475 1.707-3.615 3.587-3.615 1.954 0 3.548 1.183 4.416 2.645.146-.21.275-.444.379-.645-.209-.516-.781-.915-1.846-1.098-.926-.16-1.986-.217-3.096-.217-2.773 0-4.529 1.86-4.529 4.844v2.167c0 2.319 1.437 3.459 3.393 3.826 1.588.31 3.444.756 5.736 1.285 1.083.25 1.609.655 1.869 1.241l.03.16c.013.062.014.125.014.187 0 1.688-1.313 3-3.006 3-1.693 0-3.006-1.312-3.006-3 0-.552.014-.986.037-1.398z"/></svg>
-                    </a>
-                </div>
-            </div>
-            <div class="contact-form">
-                <form action="#">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" class="form-control"></textarea>
-                    </div>
-                    <button type="submit" class="btn">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </section>
-    
-    <footer>
-        <p>&copy; 2022 Jane Developer. All rights reserved.</p>
-    </footer>
+  </main>
+  <script>
+    // Progress bar
+    const progressBar = document.getElementById('progress-bar');
+    window.addEventListener('scroll', () => {
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+      const progress = (scrollTop / (scrollHeight - clientHeight)) * 100;
+      progressBar.style.width = progress + '%';
+    });
+    // Dark mode toggle
+    const themeSwitch = document.getElementById('theme-switch');
+    const htmlEl = document.documentElement; themeSwitch.checked = htmlEl.classList.contains('dark'); themeSwitch.addEventListener('change', () => htmlEl.classList.toggle('dark'));
+    // Scroll-spy
+    const sections = document.querySelectorAll('section'); const navLinks = document.querySelectorAll('.nav-link'); const observer = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (entry.isIntersecting) { navLinks.forEach((l) => l.classList.remove('active')); document.querySelector(`.nav-link[data-target="${entry.target.id}"]`).classList.add('active'); } }); }, { threshold: 0.6 }); sections.forEach((s) => observer.observe(s));
+  </script>
 </body>
 </html>
