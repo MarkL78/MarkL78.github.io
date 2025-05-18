@@ -232,7 +232,19 @@
       font-family: 'Indie Flower', cursive !important;
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 1000px) {
+      html, body {
+        overflow-x: hidden !important;
+        max-width: 100vw !important;
+      }
+      section {
+        margin: 0.5rem 0.5rem !important;
+        padding: 1.2rem 0.5rem !important;
+      }
+      #physics-canvas, .project-card {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+      }
       #intro-text-col {
         min-width: 0 !important;
       }
@@ -240,22 +252,23 @@
         flex-direction: column;
         gap: 1.5rem;
         align-items: center;
+        
       }
       #content #intro > div > div:last-child {
         flex: 0 0 auto;
         width: 90vw;
         max-width: 260px;
         margin: 0 0 2rem 0;
-      }
-      #content #intro > div > div:last-child > div {
         margin-left: auto !important;
         margin-right: auto !important;
+        transform: none !important;
       }
       #content #intro img[alt="Chibi Me"] {
         width: 100%;
         height: auto;
         transform: none;
         margin-bottom: 0;
+        
       }
       nav {
         display: none !important;
@@ -268,6 +281,10 @@
         margin-top: 1.25rem;
         position: static;
         display: inline-block;
+      }
+      #content #intro > div > div:last-child > div {
+        margin-left: auto !important;
+        margin-right: auto !important;
       }
     }
   </style>
