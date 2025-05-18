@@ -162,10 +162,16 @@ export async function initPhysicsSimulation(canvasId = 'physics-canvas') {
     return Math.random() < 0.5 ? speed : -speed;
   });
 
-  // Add very slow, random rotation to each circle
+  // Add very slow, random rotation to each circle and a tiny bit of random movement
   Events.on(engine, 'beforeUpdate', function() {
     for (let i = 0; i < spawnedCircles.length; i++) {
       Body.setAngularVelocity(spawnedCircles[i], circleAngularVelocities[i]);
+      // Add tiny random movement if not static (unlocked)
+      if (!spawnedCircles[i].isStatic) {
+        const fx = (Math.random() - 0.5) * 0.001; // very small force
+        const fy = (Math.random() - 0.5) * 0.001;
+        Body.applyForce(spawnedCircles[i], spawnedCircles[i].position, { x: fx, y: fy });
+      }
     }
   });
 
