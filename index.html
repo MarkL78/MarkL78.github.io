@@ -49,12 +49,12 @@
       --text-color: #000;
     }
     .dark {
-      --bg-gradient: linear-gradient(135deg, #0d1b2a, #415a77);
-      --nav-bg: rgba(20, 20, 30, 0.4);
-      --nav-text: #fff;
-      --accent: #9575cd; /* deeper lilac for dark mode */
-      --section-bg: rgba(20, 20, 30, 0.2);
-      --text-color: #fff;
+      --bg-gradient: linear-gradient(135deg, #23243a 0%, #3a3456 100%); /* deep muted blue-violet */
+      --nav-bg: rgba(40, 35, 60, 0.7); /* more muted, less contrast */
+      --nav-text: #e0d7f7; /* soft lilac-gray */
+      --accent: #b39ddb; /* soft lilac accent */
+      --section-bg: rgba(60, 50, 80, 0.5); /* gentle, not too dark */
+      --text-color: #f3eaff; /* very light lilac/white */
     }
 
     html { scroll-behavior: smooth; }
@@ -255,13 +255,41 @@
       <div class="social-icons">
         <a href="https://github.com/MarkL78" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/github.svg" alt="GitHub" /></a>
         <a href="https://www.linkedin.com/in/mark-long-29965b1a0/" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/linkedin.svg" alt="LinkedIn" /></a>
-        <a href="mailto:mark.long579@gmail.com"><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/maildotru.svg" alt="Email" /></a>
+        <a href="mailto:mark.long579@gmail.com"><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/gmail.svg" alt="Email" /></a>
       </div>
     </div>
   </nav>
   <main id="content">
     <section id="intro">
-      <h2>Intro</h2>
+      <div style="display: flex; align-items: stretch; gap: 2rem; flex-wrap: wrap;">
+        <div id="intro-text-col" style="flex: 1 1 250px; min-width: 200px; display: flex; flex-direction: column; justify-content: stretch;">
+          <h2>Intro</h2>
+          <br>
+          <p>Hi there, my name's Mark and welcome to my little corner of the internet!</p>
+          <br>
+          <p>I'm a software engineer with a passion for building intelligent systems and exploring all of
+            the exciting ways that AI is reshaping the way we interact with the world and each other. I'm
+            currently interested in how AI can be utilized for non-traditional learning applications, for both
+            humans and machines.
+          </p>
+          <br>
+          <p>I'm currently pursuing a Masters in AI from UT Austin and previously worked on building 
+            intelligent navigation and control systems for Catepillar's marine vehicles.
+          </p>
+          <br>
+          <p>If you're interested in learning more about my work, want to work together, or just want to chat,
+            please reach out!
+          </p>
+          <br>
+        </div>
+        <div style="flex: 0 0 340px; display: flex; justify-content: center; align-items: center;">
+          <div style="width: 260px; height: 370px; display: flex; align-items: flex-end; justify-content: center; position: relative; background: #e6e6fa; 
+                      border-radius: 2.2rem; box-shadow: 0 4px 24px rgba(0,0,0,0.13); margin-top: 2.5rem; margin-bottom: 0.5rem; transform: translateY(1.5rem);">
+            <img src="chibiMe.png" alt="Chibi Me" style="width: 120%; height: 114%; object-fit: contain; 
+                      border-radius: 1.5rem; background: transparent; position:relative; z-index:1; margin-bottom: 0.5rem; transform: translateY(4rem);" />
+          </div>
+        </div>
+      </div>
     </section>
     <div class="divider"><svg viewBox="0 0 1440 40"><path d="M0,40 C360,0 720,80 1440,40 L1440,0 L0,0 Z" fill="#d6c7f7"/></svg></div>
     
@@ -280,26 +308,32 @@
 
       <!-- Second Project Card -->
       <div class="project-card">
-        <h3 class="text-2xl font-semibold mb-2">Project Title</h3>
-        <p>Brief description of the project goes here.</p>
-        <a href="#" class="card-link" target="_blank">View Project</a>
+        <h3 class="text-2xl font-semibold mb-2">Intelligent NPCs using RAG databases</h3>
+        <p>Allows for NPCs to have their own unique personalities and memories and evovle differently
+          based on the users interactions and choices.</p>
+        <a href="#" class="card-link" target="_blank">Play around with it here!</a>
       </div>
 
       <!-- Third Project Card -->
       <div class="project-card">
-        <h3 class="text-2xl font-semibold mb-2">Project Title</h3>
-        <p>Brief description of the project goes here.</p>
-        <a href="#" class="card-link" target="_blank">View Project</a>
+        <h3 class="text-2xl font-semibold mb-2">AI Dance Instructor</h3>
+        <p>Computer vision platform that takes in a dance video and analyze the moves then
+          maps that to an educational dance instruction.</p>
+        </p>
+        <a href="#" class="card-link" target="_blank">Wanna test it?</a>
       </div>
       
     </section>
+    <div style="text-align:right; margin: 0 2rem 1rem 0;">
+      <a href="projects.html" style="color:var(--accent);font-weight:bold;text-decoration:none;font-size:1.1rem;">More Projects &rarr;</a>
+    </div>
     <div class="divider"><svg viewBox="0 0 1440 40"><path d="M0,0 C360,40 720,-40 1440,0 L1440,40 L0,40 Z" fill="#d6c7f7"/></svg></div>
     
     <section id="writing"><h2>...or write things!</h2>
         <!-- First Writing Card -->
       <div class="project-card">
-        <h3 class="text-2xl font-semibold mb-2">SongV is the best ship</h3>
-        <p>No one can make me change my mind</p>
+        <h3 class="text-2xl font-semibold mb-2">I haven't actually written anything yet...</h3>
+        <p>but its coming soon!</p>
         <a href="https://medium.com/" class="card-link" target="_blank">View Project</a>
       </div>
 
@@ -317,7 +351,9 @@
         <a href="https://medium.com/" class="card-link" target="_blank">View Project</a>
       </div>
     </section>
-    
+    <div style="text-align:right; margin: 0 2rem 1rem 0;">
+      <a href="writing.html" style="color:var(--accent);font-weight:bold;text-decoration:none;font-size:1.1rem;">More Writing &rarr;</a>
+    </div>
     <div class="divider"><svg viewBox="0 0 1440 40"><path d="M0,40 C360,0 720,80 1440,40 L1440,0 L0,0 Z" fill="#d6c7f7"/></svg></div>
     <section id="hobbies"><h2>when not coding...</h2>
       <canvas id="physics-canvas" style="width:100%; height:400px; display:block;"></canvas>
@@ -330,10 +366,10 @@
 
     <div class="divider"><svg viewBox="0 0 1440 40"><path d="M0,40 C360,0 720,80 1440,40 L1440,0 L0,0 Z" fill="#d6c7f7"/></svg></div>
     <section id="contact"><h2>Let's connect!</h2>
-      <form id="contact-form" action="https://formspree.io/f/yourFormID" method="POST" style="max-width:1000px;width:98%;margin:2rem auto 0 auto;display:flex;flex-direction:column;gap:1rem;">
+      <form id="contact-form" action="https://formspree.io/f/myzwovko" method="POST" style="max-width:1000px;width:98%;margin:2rem auto 0 auto;display:flex;flex-direction:column;gap:1rem;">
         <div style="background: var(--section-bg); box-shadow: 0 4px 24px rgba(0,0,0,0.08); border-radius: 1rem; padding: 2.5rem 2rem; display: flex; flex-direction: column; gap: 1.25rem;">
           <input type="text" name="name" placeholder="Whats your name?" required style="padding:0.75rem 1rem;border-radius:0.75rem;border:1.5px solid #d1d5db;font-size:1rem;transition:box-shadow 0.2s,border 0.2s;outline:none;box-shadow:none;">
-          <input type="email" name="email" placeholder="Best way to reach you?" required style="padding:0.75rem 1rem;border-radius:0.75rem;border:1.5px solid #d1d5db;font-size:1rem;transition:box-shadow 0.2s,border 0.2s;outline:none;box-shadow:none;">
+          <input type="email" name="email" placeholder="What's your email?" required style="padding:0.75rem 1rem;border-radius:0.75rem;border:1.5px solid #d1d5db;font-size:1rem;transition:box-shadow 0.2s,border 0.2s;outline:none;box-shadow:none;">
           <textarea name="message" placeholder="Now what's on your mind?" required rows="5" style="padding:0.75rem 1rem;border-radius:0.75rem;border:1.5px solid #d1d5db;font-size:1rem;transition:box-shadow 0.2s,border 0.2s;outline:none;box-shadow:none;resize:vertical;"></textarea>
           <button type="submit" style="background:var(--accent);color:#fff;padding:0.75rem 0;font-size:1.1rem;border:none;border-radius:0.75rem;font-weight:bold;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.08);transition:background 0.2s,box-shadow 0.2s;">Send</button>
           <div id="form-status" style="text-align:center;font-size:0.98rem;"></div>
@@ -373,6 +409,33 @@
     const htmlEl = document.documentElement; themeSwitch.checked = htmlEl.classList.contains('dark'); themeSwitch.addEventListener('change', () => htmlEl.classList.toggle('dark'));
     // Scroll-spy
     const sections = document.querySelectorAll('section'); const navLinks = document.querySelectorAll('.nav-link'); const observer = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (entry.isIntersecting) { navLinks.forEach((l) => l.classList.remove('active')); document.querySelector(`.nav-link[data-target="${entry.target.id}"]`).classList.add('active'); } }); }, { threshold: 0.6 }); sections.forEach((s) => observer.observe(s));
+    // Contact form AJAX submission for user feedback
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('contact-form');
+      const status = document.getElementById('form-status');
+      if (form) {
+        form.addEventListener('submit', async function(e) {
+          e.preventDefault();
+          status.textContent = 'Sending...';
+          const data = new FormData(form);
+          try {
+            const res = await fetch(form.action, {
+              method: 'POST',
+              body: data,
+              headers: { 'Accept': 'application/json' }
+            });
+            if (res.ok) {
+              status.textContent = 'Thanks for reaching out! I\'ll respond ASAP';
+              form.reset();
+            } else {
+              status.textContent = 'Oops! There was a problem. Can you please try again.';
+            }
+          } catch {
+            status.textContent = 'Oops! There was a problem. Can you please try again.';
+          }
+        });
+      }
+    });
   </script>
 </body>
 </html>
