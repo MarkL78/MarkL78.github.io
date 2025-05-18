@@ -61,12 +61,15 @@ function createBounds(render) {
   return [
     Bodies.rectangle(w/2, -25, w, 40,  { isStatic: true, render: { visible: false } }),
     Bodies.rectangle(-25, h/2, 50, h,  { isStatic: true, render: { visible: false } }),
-    Bodies.rectangle(w+50, h/2, 75, h, { isStatic: true, render: { visible: false } }),
+    Bodies.rectangle(w+50, h/2, 100, h, { isStatic: true, render: { visible: false } }),
     Bodies.rectangle(w/2, h+50, w, 100, { isStatic: true, render: { visible: false } })
   ];
 }
 
 export async function initPhysicsSimulation(canvasId = 'physics-canvas') {
+  // Detect mobile (max-width: 700px)
+  const isMobile = window.matchMedia('(max-width: 700px)').matches;
+
   const engine = Engine.create({ gravity: { x: 0, y: 0 } });
   const world = engine.world;
   const canvas = document.getElementById(canvasId);
@@ -143,7 +146,15 @@ export async function initPhysicsSimulation(canvasId = 'physics-canvas') {
   const response = await fetch(TEXTURE_PATH + 'manifest.json');
   const textures = await response.json();
   const images = await preloadImages(textures);
-  const spawnedCircles = images.map(img => spawnCircle(img, render, world));
+  const spawnedCircles = images.map(img =>
+    spawnCircle(
+      img,
+      render,
+      world,
+      isMobile ? 48 : CIRCLE_RADIUS, // smaller radius on mobile
+      isMobile ? 96 : TARGET_SIZE    // smaller target size on mobile
+    )
+  );
 
   // Assign a random angular velocity (direction and speed) to each circle
   const circleAngularVelocities = spawnedCircles.map(() => {
@@ -158,43 +169,45 @@ export async function initPhysicsSimulation(canvasId = 'physics-canvas') {
     }
   });
 
-  // Circle growth/shrink on collision
-  const MIN_RADIUS = 24;
-  const MAX_RADIUS = 160;
-  Events.on(engine, 'collisionStart', function(event) {
-    for (const pair of event.pairs) {
-      const a = pair.bodyA;
-      const b = pair.bodyB;
-      // Only handle circle-circle collisions
-      if (a.circleRadius && b.circleRadius) {
-        // Randomly pick which grows and which shrinks
-        const grower = Math.random() < 0.5 ? a : b;
-        const shrinker = grower === a ? b : a;
-        // Amount to change (small, e.g., 2-6 px)
-        const delta = 2 + Math.random() * 4;
-        // Only apply if both will stay in bounds
-        if (
-          grower.circleRadius + delta <= MAX_RADIUS &&
-          shrinker.circleRadius - delta >= MIN_RADIUS
-        ) {
-          // Update radii
-          grower.circleRadius += delta;
-          shrinker.circleRadius -= delta;
-          // Update render scaling (sprite)
-          if (grower.render.sprite) {
-            const w = grower.spriteWidth || 96;
-            const h = grower.spriteHeight || 96;
-            grower.render.sprite.xScale = (grower.circleRadius * 2) / w;
-            grower.render.sprite.yScale = (grower.circleRadius * 2) / h;
-          }
-          if (shrinker.render.sprite) {
-            const w = shrinker.spriteWidth || 96;
-            const h = shrinker.spriteHeight || 96;
-            shrinker.render.sprite.xScale = (shrinker.circleRadius * 2) / w;
-            shrinker.render.sprite.yScale = (shrinker.circleRadius * 2) / h;
+  // Circle growth/shrink on collision (desktop only)
+  if (!isMobile) {
+    const MIN_RADIUS = 24;
+    const MAX_RADIUS = 160;
+    Events.on(engine, 'collisionStart', function(event) {
+      for (const pair of event.pairs) {
+        const a = pair.bodyA;
+        const b = pair.bodyB;
+        // Only handle circle-circle collisions
+        if (a.circleRadius && b.circleRadius) {
+          // Randomly pick which grows and which shrinks
+          const grower = Math.random() < 0.5 ? a : b;
+          const shrinker = grower === a ? b : a;
+          // Amount to change (small, e.g., 2-6 px)
+          const delta = 2 + Math.random() * 4;
+          // Only apply if both will stay in bounds
+          if (
+            grower.circleRadius + delta <= MAX_RADIUS &&
+            shrinker.circleRadius - delta >= MIN_RADIUS
+          ) {
+            // Update radii
+            grower.circleRadius += delta;
+            shrinker.circleRadius -= delta;
+            // Update render scaling (sprite)
+            if (grower.render.sprite) {
+              const w = grower.spriteWidth || 96;
+              const h = grower.spriteHeight || 96;
+              grower.render.sprite.xScale = (grower.circleRadius * 2) / w;
+              grower.render.sprite.yScale = (grower.circleRadius * 2) / h;
+            }
+            if (shrinker.render.sprite) {
+              const w = shrinker.spriteWidth || 96;
+              const h = shrinker.spriteHeight || 96;
+              shrinker.render.sprite.xScale = (shrinker.circleRadius * 2) / w;
+              shrinker.render.sprite.yScale = (shrinker.circleRadius * 2) / h;
+            }
           }
         }
       }
-    }
-  });
+    });
+  }
 } 

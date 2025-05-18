@@ -233,12 +233,37 @@
     }
 
     @media (max-width: 700px) {
+      #intro-text-col {
+        min-width: 0 !important;
+      }
+      #content #intro > div {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;
+      }
+      #content #intro > div > div:last-child {
+        flex: 0 0 auto;
+        width: 90vw;
+        max-width: 260px;
+        margin: 0 0 2rem 0;
+      }
+      #content #intro img[alt="Chibi Me"] {
+        width: 100%;
+        height: auto;
+        transform: none;
+        margin-bottom: 0;
+      }
       nav {
         display: none !important;
-        width: 0 !important;
-        height: 0 !important;
-        padding: 0 !important;
-        overflow: hidden !important;
+      }
+      main#content {
+        margin-left: 0 !important;
+        width: 100% !important;
+      }
+      .project-card .card-link {
+        margin-top: 1.25rem;
+        position: static;
+        display: inline-block;
       }
     }
   </style>
